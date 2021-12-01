@@ -7,6 +7,7 @@ class Incidente:
         self.linhas = linhas
         self.matriz_incidente =[]
         self.escreve_incidente()
+        self.remove_vertice(4)
 
     def escreve_incidente(self):
         matriz =[]
@@ -43,19 +44,40 @@ class Incidente:
         self.linhas += diferenca
         self.escreve_incidente()
 
-    def remove_aresta (self,verti1,verti2):
+    def procura_todas_arestas(self,verti1):
+        arestas =[]
 
         for i in range (0,len(self.vertices_arestas)):
+            for j in range (0,2):
 
+                if self.vertices_arestas[i][j] == verti1:
+                    arestas.append(self.vertices_arestas[i])
+        return arestas
+
+    def procura_aresta (self,verti1,verti2):
+        linha = -1
+        for i in range (0,len(self.vertices_arestas)):
             if (((self.vertices_arestas[i][0] == verti1) and (self.vertices_arestas[i][1] == verti2)) or
-                    ((self.vertices_arestas[i][1] == verti2) and (self.vertices_arestas[i][1] == verti1))):
-
-                del self.vertices_arestas[i]
-                self.colunas -=1
-
-                if (verti1 == self.linhas) or (verti2 == self.linhas):
-                    self.linhas -=1
-
-                self.escreve_incidente()
+                        ((self.vertices_arestas[i][0] == verti2) and (self.vertices_arestas[i][1] == verti1))):
+                linha = i
                 break
-                
+        return linha
+
+    def remove_aresta(self,verti1,verti2):
+
+        i = self.procura_aresta(verti1,verti2)
+
+        del self.vertices_arestas[i]
+        self.colunas -=1
+
+        self.escreve_incidente()
+
+
+    def remove_vertice (self,verti1):
+        arestas = self.procura_todas_arestas(verti1)
+
+        for i in range (0,len(arestas)):
+            self.remove_aresta(arestas[i][0],arestas[i][1])
+
+        del self.matriz_incidente[verti1-1]
+
