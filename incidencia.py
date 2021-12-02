@@ -7,7 +7,6 @@ class Incidente:
         self.linhas = linhas
         self.matriz_incidente =[]
         self.escreve_incidente()
-        self.remove_vertice(4)
 
     def escreve_incidente(self):
         matriz =[]

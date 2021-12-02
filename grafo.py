@@ -1,13 +1,14 @@
 import adjacencia,incidencia
+import matplotlib
+import networkx as nx
+import matplotlib.pyplot as plt
 
 class Grafo:
 
     def __init__(self):
-        self.matriz_adjacente = []
-        self.matriz_incidente = []
         self.entradas = []
         self.maior_vertice = 0
-
+        self.pega_vertices()
 
     def pega_vertices(self):
         vertices = [0, 0, 0]
@@ -29,34 +30,38 @@ class Grafo:
         self.matriz_adjacente = adjacencia.Adjacente(self.entradas, self.maior_vertice)
         self.matriz_incidente = incidencia.Incidente(self.entradas, len(self.entradas),self.maior_vertice)
 
-    #def pega_vertices_arestas(self):
-     #   conjunto = []
-      #  entrada = [0,0,0]
-       # linhas = 0
-        #arestas_vertices =[]
+    def adiciona_aresta(self):
+        print("Digite o vertice para adicionar: ")
+        vertices = list(map(int, input().split()))
+        self.matriz_adjacente.adiciona(vertices[0],vertices[1],vertices[2])
+        self.matriz_incidente.adiciona(vertices[0],vertices[1],vertices[2])
+        self.entradas.append(vertices)
+        self.desenhaGrafo()
 
-        #Recebe as arestas e os vértices
-        #while (len(entrada) == 3):
-         #   entrada = list(input("Digite o inicio e o final do vértice, e a aresta: \n").split())
-          #  arestas_vertices.append(entrada)
+    def remove_aresta(self):
+        print("Digite o vertice para remover: ")
+        vertices = list(map(int, input().split()))
+        self.matriz_adjacente.remove_aresta(vertices[0], vertices[1])
+        self.matriz_incidente.remove_aresta(vertices[0], vertices[1])
 
-        #del arestas_vertices[-1]
-        #linhas = len(arestas_vertices)
+        #Achar o vértice p remover
+        self.desenhaGrafo()
 
-        #Verifica se todos os vértices são inteiros e pega o maior vértice
-        #colunas = -1
-        #for a in range (0,len(arestas_vertices)):
-         #   for b in range (0,2):
-          #      try:
-           #         arestas_vertices[a][b]= int(arestas_vertices[a][b])
-            #        if (arestas_vertices[a][b]>colunas):
-             #           colunas = arestas_vertices[a][b]
-              #  except:
-               #     print("Um erro foi detectado na entrada.")
-                #    break
+    def remove_no(self):
+        print("Digite o nó para remover: ")
+        no= int(input())
+        self.matriz_adjacente.remove_vertice(no)
+        self.matriz_incidente.remove_vertice(no)
+        #Achar o nó p remover
 
-        #self.matriz_incidente = incidencia.Incidente(arestas_vertices, linhas,colunas)
 
+
+    def desenhaGrafo(self):
+        G = nx.Graph()
+        E = self.entradas
+        G.add_weighted_edges_from(E)
+        nx.draw(G, with_labels=True, font_weight="bold")
+        plt.savefig("graph.png")
 
 
 
@@ -65,8 +70,7 @@ class Grafo:
 
 objeto = Grafo()
 #objeto.pega_vertices_com_pesos()
-objeto.pega_vertices()
-
+objeto.desenhaGrafo()
 print("                         ")
 
 
