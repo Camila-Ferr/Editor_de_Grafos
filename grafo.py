@@ -8,7 +8,6 @@ class Grafo:
     def __init__(self):
         self.entradas = []
         self.maior_vertice = 0
-        self.pega_vertices()
 
     def pega_vertices(self):
         vertices = [0, 0, 0]
@@ -33,7 +32,7 @@ class Grafo:
     def adiciona_aresta(self):
         print("Digite o vertice para adicionar: ")
         vertices = list(map(int, input().split()))
-        self.matriz_adjacente.adiciona(vertices[0],vertices[1],vertices[2])
+        #self.matriz_adjacente.adiciona(vertices[0],vertices[1],vertices[2])
         self.matriz_incidente.adiciona(vertices[0],vertices[1],vertices[2])
         self.entradas.append(vertices)
         self.desenhaGrafo()
@@ -41,7 +40,7 @@ class Grafo:
     def remove_aresta(self):
         print("Digite o vertice para remover: ")
         vertices = list(map(int, input().split()))
-        self.matriz_adjacente.remove_aresta(vertices[0], vertices[1])
+        #self.matriz_adjacente.remove_aresta(vertices[0], vertices[1])
         self.matriz_incidente.remove_aresta(vertices[0], vertices[1])
 
         #Achar o vértice p remover
@@ -50,11 +49,19 @@ class Grafo:
     def remove_no(self):
         print("Digite o nó para remover: ")
         no= int(input())
-        self.matriz_adjacente.remove_vertice(no)
+        #self.matriz_adjacente.remove_vertice(no)
         self.matriz_incidente.remove_vertice(no)
         #Achar o nó p remover
+        self.desenhaGrafo()
 
+    def printa_matriz(self):
+        print('Matriz adjacente :\n')
+        for i in range (0,len(self.matriz_adjacente.matriz_adjacente)):
+            print(self.matriz_adjacente.matriz_adjacente[i])
 
+        print('Matriz incidênte :\n')
+        for i in range(0, len(self.matriz_incidente.matriz_incidente)):
+            print(self.matriz_incidente.matriz_incidente[i])
 
     def desenhaGrafo(self):
         G = nx.Graph()
@@ -66,6 +73,29 @@ class Grafo:
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
         plt.savefig("graph.png")
 
+    def menu(self):
+
+        self.pega_vertices()
+        self.desenhaGrafo()
+        self.printa_matriz()
+        n=1
+
+        while (n!=0):
+            print('\n')
+            print('Digite 1 para adicionar uma aresta :')
+            print('Digite 2 para remover uma aresta :')
+            print('Digite 3 para remover um nó :\n')
+            n = int(input())
+
+            if (n == 1):
+                self.adiciona_aresta()
+                self.printa_matriz()
+            elif (n == 2):
+                self.remove_aresta()
+                self.printa_matriz()
+            elif (n == 3):
+                self.remove_no()
+                self.printa_matriz()
 
 
 
@@ -73,7 +103,7 @@ class Grafo:
 
 objeto = Grafo()
 #objeto.pega_vertices_com_pesos()
-objeto.desenhaGrafo()
+objeto.menu()
 print("                         ")
 
 

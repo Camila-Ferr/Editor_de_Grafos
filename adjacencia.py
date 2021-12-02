@@ -13,11 +13,8 @@ class Adjacente:
             self.matriz_adjacente.append(lista)
 
         for i in range(len(self.entradas)):
-            print(i)
             self.matriz_adjacente[self.entradas[i][0] - 1][self.entradas[i][1] - 1] = self.entradas[i][2]
             self.matriz_adjacente[self.entradas[i][1] - 1][self.entradas[i][0] - 1] = self.entradas[i][2]
-
-        print(self.matriz_adjacente)
 
 
     def adiciona(self, vert1, vert2, peso_arest):

@@ -22,7 +22,6 @@ class Incidente:
                 matriz[indice-1][lin] = 1
 
         self.matriz_incidente = matriz
-        print(self.matriz_incidente)
 
     def adiciona(self,verti1, verti2,peso):
 
@@ -38,9 +37,12 @@ class Incidente:
                 diferenca = diferenca1
             else:
                 diferenca = diferenca2
-
+        print(self.colunas)
         self.colunas += 1
+        print(self.colunas)
+        print(self.linhas)
         self.linhas += diferenca
+        print(self.linhas)
         self.escreve_incidente()
 
     def procura_todas_arestas(self,verti1):
