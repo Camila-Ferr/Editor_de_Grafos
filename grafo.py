@@ -60,7 +60,10 @@ class Grafo:
         G = nx.Graph()
         E = self.entradas
         G.add_weighted_edges_from(E)
-        nx.draw(G, with_labels=True, font_weight="bold")
+        pos = nx.spring_layout(G)
+        nx.draw(G, pos, with_labels=True, font_weight="bold")
+        edge_weight = nx.get_edge_attributes(G,"weight")
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
         plt.savefig("graph.png")
 
 
