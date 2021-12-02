@@ -2,12 +2,14 @@ import adjacencia,incidencia
 import matplotlib
 import networkx as nx
 import matplotlib.pyplot as plt
+import os
 
 class Grafo:
 
     def __init__(self):
         self.entradas = []
         self.maior_vertice = 0
+        self.contador = 0
 
     def pega_vertices(self):
         vertices = [0, 0, 0]
@@ -40,7 +42,7 @@ class Grafo:
     def remove_aresta(self):
         print("Digite o vertice para remover: ")
         vertices = list(map(int, input().split()))
-        #self.matriz_adjacente.remove_aresta(vertices[0], vertices[1])
+        self.matriz_adjacente.remove_aresta(vertices[0], vertices[1])
         self.matriz_incidente.remove_aresta(vertices[0], vertices[1])
 
         #Achar o vértice p remover
@@ -65,13 +67,16 @@ class Grafo:
 
     def desenhaGrafo(self):
         G = nx.Graph()
+        plt.cla()
+        plt.clf()
         E = self.entradas
         G.add_weighted_edges_from(E)
         pos = nx.spring_layout(G)
         nx.draw(G, pos, with_labels=True, font_weight="bold")
         edge_weight = nx.get_edge_attributes(G,"weight")
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
-        plt.savefig("graph.png")
+        plt.show()
+
 
     def menu(self):
 
