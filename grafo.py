@@ -17,8 +17,6 @@ class Grafo:
         vertices = [0, 0, 0]
         print("Digite os vertices: ")
         vertice_c_peso = list(map(int, input().split()))
-        print (vertice_c_peso)
-        print (len(vertice_c_peso))
         while (len(vertice_c_peso) != 0):
             if (auxiliar.verifica_repeticao(self.entradas,vertice_c_peso[0],vertice_c_peso[1])):
                 self.e.append(vertice_c_peso)
@@ -38,10 +36,8 @@ class Grafo:
         self.escreve_adjacente()
         self.escreve_incidente()
 
-    def adiciona_aresta(self):
+    def adiciona_aresta(self,vertices_c_peso):
         vertices = [0,0,0]
-        print("Digite o vertice para adicionar: ")
-        vertices_c_peso = list(map(int, input().split()))
         vertices= vertices_c_peso[0],vertices_c_peso[1],vertices_c_peso[2]
         if (auxiliar.verifica_repeticao(self.entradas,vertices_c_peso[0],vertices_c_peso[1])):
             self.entradas.append(vertices)
@@ -59,9 +55,7 @@ class Grafo:
         self.escreve_incidente()
         self.desenhaGrafo()
 
-    def remove_no(self):
-        print("Digite o nó para remover: ")
-        no= int(input())
+    def remove_no(self,no):
         aresta = auxiliar.procura_todas_arestas(self.entradas,no)
         for i in range (0,len(aresta)):
             self.remove_aresta(aresta[i])
@@ -94,7 +88,6 @@ class Grafo:
             if (self.e[indice][0] == vert1):
                 self.e[indice][3] = peso
             else:
-                print('oi')
                 self.e[indice][4] = peso
 
 
@@ -153,11 +146,15 @@ class Grafo:
             print('\n')
             print('Digite 1 para adicionar uma aresta :')
             print('Digite 2 para remover uma aresta :')
-            print('Digite 3 para remover um nó :\n')
+            print('Digite 3 para remover um nó :')
+            print('Digite 4 para modificar o comprimento de uma aresta :')
+            print('Digite 5 para modificar o peso de um vértice :\n')
             n = int(input())
 
             if (n == 1):
-                self.adiciona_aresta()
+                print("Digite o vertice para adicionar: ")
+                vertices_c_peso = list(map(int, input().split()))
+                self.adiciona_aresta(vertices_c_peso)
                 self.printa_matriz()
             elif (n == 2):
                 print('Digite a aresta que deseja remover:')
@@ -165,14 +162,19 @@ class Grafo:
                 self.remove_aresta(aresta)
                 self.printa_matriz()
             elif (n == 3):
-                self.remove_no()
+                print("Digite o nó para remover: ")
+                no = int(input())
+                self.remove_no(no)
                 self.printa_matriz()
             elif(n==4):
+                print("Digite a aresta para modificar: ")
                 aresta = list(map(int, input().split()))
                 self.modifica_aresta(aresta[0],aresta[1],aresta[2])
                 self.printa_matriz()
             elif(n==5):
-                self.modifica_pesos(1,4)
+                print('Digite o vértice e seu novo peso :\n')
+                v = list(map(int, input().split()))
+                self.modifica_pesos(v[0],v[1])
 
 
 
