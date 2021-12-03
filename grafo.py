@@ -1,4 +1,4 @@
-import adjacencia,incidencia
+import auxiliar
 import matplotlib
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -8,62 +8,95 @@ class Grafo:
 
     def __init__(self):
         self.entradas = []
+        self.e =[]
         self.maior_vertice = 0
         self.contador = 0
+        self.colunas = len(self.entradas)
 
     def pega_vertices(self):
         vertices = [0, 0, 0]
         print("Digite os vertices: ")
-        vertices = list(map(int, input().split()))
-        while (len(vertices) != 0):
-            self.entradas.append(vertices)
+        vertice_c_peso = list(map(int, input().split()))
+        print (vertice_c_peso)
+        print (len(vertice_c_peso))
+        while (len(vertice_c_peso) != 0):
+            if (auxiliar.verifica_repeticao(self.entradas,vertice_c_peso[0],vertice_c_peso[1])):
+                self.e.append(vertice_c_peso)
+                vertices = vertice_c_peso[0], vertice_c_peso[1], vertice_c_peso[2]
+                self.entradas.append(vertices)
             print("Digite os vertices: ")
-            vertices = list(map(int, input().split()))
-
+            vertice_c_peso = list(map(int, input().split()))
 
         print(self.entradas)
+        print(self.e)
 
         for i in range(len(self.entradas)):
             for j in range(0, 2):
                 if(self.entradas[i][j] > self.maior_vertice):
                     self.maior_vertice = self.entradas[i][j]
 
-        self.matriz_adjacente = adjacencia.Adjacente(self.entradas, self.maior_vertice)
-        self.matriz_incidente = incidencia.Incidente(self.entradas, len(self.entradas),self.maior_vertice)
+        self.escreve_adjacente()
+        self.escreve_incidente()
 
     def adiciona_aresta(self):
+        vertices = [0,0,0]
         print("Digite o vertice para adicionar: ")
-        vertices = list(map(int, input().split()))
-        #self.matriz_adjacente.adiciona(vertices[0],vertices[1],vertices[2])
-        self.matriz_incidente.adiciona(vertices[0],vertices[1],vertices[2])
-        self.entradas.append(vertices)
+        vertices_c_peso = list(map(int, input().split()))
+        vertices= vertices_c_peso[0],vertices_c_peso[1],vertices_c_peso[2]
+        if (auxiliar.verifica_repeticao(self.entradas,vertices_c_peso[0],vertices_c_peso[1])):
+            self.entradas.append(vertices)
+            self.e.append(vertices_c_peso)
+
+        self.escreve_adjacente()
+        self.escreve_incidente()
         self.desenhaGrafo()
 
-    def remove_aresta(self):
-        print("Digite o vertice para remover: ")
-        vertices = list(map(int, input().split()))
-        self.matriz_adjacente.remove_aresta(vertices[0], vertices[1])
-        self.matriz_incidente.remove_aresta(vertices[0], vertices[1])
-
-        #Achar o vértice p remover
+    def remove_aresta(self,vertices):
+        i = auxiliar.procura_aresta(self.entradas,vertices[0],vertices[1])
+        del self.entradas[i]
+        del self.e[i]
+        self.escreve_adjacente()
+        self.escreve_incidente()
         self.desenhaGrafo()
 
     def remove_no(self):
         print("Digite o nó para remover: ")
         no= int(input())
-        #self.matriz_adjacente.remove_vertice(no)
-        self.matriz_incidente.remove_vertice(no)
-        #Achar o nó p remover
+        aresta = auxiliar.procura_todas_arestas(self.entradas,no)
+        for i in range (0,len(aresta)):
+            self.remove_aresta(aresta[i])
+
+        self.escreve_incidente()
+        self.escreve_adjacente()
         self.desenhaGrafo()
 
     def printa_matriz(self):
         print('Matriz adjacente :\n')
-        for i in range (0,len(self.matriz_adjacente.matriz_adjacente)):
-            print(self.matriz_adjacente.matriz_adjacente[i])
+        for i in range (0,len(self.matriz_adjacente)):
+            print(self.matriz_adjacente[i])
 
         print('Matriz incidênte :\n')
-        for i in range(0, len(self.matriz_incidente.matriz_incidente)):
-            print(self.matriz_incidente.matriz_incidente[i])
+        for i in range(0, len(self.matriz_incidente)):
+            print(self.matriz_incidente[i])
+
+    def modifica_aresta (self, vert1,vert2, vert3):
+        i = auxiliar.procura_aresta(self.entradas,vert1,vert2)
+        self.entradas[i][2] = vert3
+        self.e[i][2]= vert3
+        self.escreve_incidente()
+        self.escreve_adjacente()
+        self.desenhaGrafo()
+
+    def modifica_pesos (self, vert1, peso):
+        aux = auxiliar.procura_todas_arestas(self.entradas,vert1)
+        for i in range (0, len(aux)):
+            indice = auxiliar.procura_aresta(self.e,aux[i][0],aux[i][1])
+            if (self.e[indice][0] == vert1):
+                self.e[indice][3] = peso
+            else:
+                print('oi')
+                self.e[indice][4] = peso
+
 
     def desenhaGrafo(self):
         G = nx.Graph()
@@ -76,6 +109,37 @@ class Grafo:
         edge_weight = nx.get_edge_attributes(G,"weight")
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
         plt.show()
+
+    def escreve_incidente(self):
+
+        self.colunas = len(self.entradas)
+        self.maior_vertice = auxiliar.atualiza_maior(self.entradas,-1)
+        matriz =[]
+
+        # Cria matriz zerada
+        for i in range (0, self.maior_vertice):
+            linha = [0]*self.colunas
+            matriz.append(linha)
+
+        for lin in range (0, len(self.entradas)):
+            for col in range (0,2):
+                indice = self.entradas[lin][col]
+                matriz[indice-1][lin] = 1
+
+        self.matriz_incidente = matriz
+
+    def escreve_adjacente(self):
+
+        self.maior_vertice = auxiliar.atualiza_maior(self.entradas, -1)
+        self.colunas = len(self.entradas)
+        self.matriz_adjacente = []
+        for i in range(self.maior_vertice):
+            lista = [0] * self.maior_vertice
+            self.matriz_adjacente.append(lista)
+
+        for i in range(len(self.entradas)):
+            self.matriz_adjacente[self.entradas[i][0] - 1][self.entradas[i][1] - 1] = self.entradas[i][2]
+            self.matriz_adjacente[self.entradas[i][1] - 1][self.entradas[i][0] - 1] = self.entradas[i][2]
 
 
     def menu(self):
@@ -96,11 +160,19 @@ class Grafo:
                 self.adiciona_aresta()
                 self.printa_matriz()
             elif (n == 2):
-                self.remove_aresta()
+                print('Digite a aresta que deseja remover:')
+                aresta = list(map(int,input().split()))
+                self.remove_aresta(aresta)
                 self.printa_matriz()
             elif (n == 3):
                 self.remove_no()
                 self.printa_matriz()
+            elif(n==4):
+                aresta = list(map(int, input().split()))
+                self.modifica_aresta(aresta[0],aresta[1],aresta[2])
+                self.printa_matriz()
+            elif(n==5):
+                self.modifica_pesos(1,4)
 
 
 
