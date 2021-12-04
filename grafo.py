@@ -131,24 +131,49 @@ class Grafo:
         ax.table(cellText=self.matriz_incidente, colLabels=linha ,loc="center", rowLabels=colunas)
         plt.savefig('Matriz incidente.png')
 
+    def limpa_grafo(self):
+        self.entradas = []
+        self.e = []
+        self.v = []
+        self.maior_vertice = 0
+        self.contador = 0
+        self.colunas = len(self.entradas)
+
+        self.desenhaGrafo()
+
     def desenhaGrafo(self):
 
         G = nx.Graph()
         plt.cla()
         plt.clf()
         E = self.entradas
-        for i in range(0,len(self.v)):
+        for i in range(0, len(self.v)):
             G.add_node(self.v[i][0])
         G.add_weighted_edges_from(E)
         pos = nx.spring_layout(G)
         nx.draw(G, pos, with_labels=True, font_weight="bold")
-        edge_weight = nx.get_edge_attributes(G,"weight")
+        edge_weight = nx.get_edge_attributes(G, "weight")
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
         plt.savefig('graph.png')
+        plt.close()
 
+    def desenhaGrafoSeparado(self):
+
+        G = nx.Graph()
+        plt.cla()
+        plt.clf()
+        E = self.entradas
+        for i in range(0, len(self.v)):
+            G.add_node(self.v[i][0])
+        G.add_weighted_edges_from(E)
+        pos = nx.spring_layout(G)
+        nx.draw(G, pos, with_labels=True, font_weight="bold")
+        edge_weight = nx.get_edge_attributes(G, "weight")
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
+        plt.show()
 
     def tabela_pesos(self):
-        pesos=[]
+        pesos = []
         vertices = []
         for i in range(0, len(self.e)):
             vertice1 = self.e[i][0]
@@ -157,24 +182,16 @@ class Grafo:
             peso2 = self.e[i][4]
 
             if vertice1 not in vertices:
-                pesos.append([vertice1,peso1])
+                pesos.append([vertice1, peso1])
                 vertices.append(vertice1)
 
             if vertice2 not in vertices:
-                pesos.append([vertice2,peso2])
+                pesos.append([vertice2, peso2])
                 vertices.append(vertice2)
 
-        for j in range (0,len(self.v)):
-                print(self.v)
-                pesos.append([self.v[j][0],self.v[j][1]])
-        print(pesos)
-        fig, ax = plt.subplots(1, 1)
-
-        column_labels = ["Vértice", "Peso"]
-        ax.axis('tight')
-        ax.axis('off')
-        ax.table(cellText=pesos, colLabels=column_labels, loc="center")
-        plt.savefig('peso.png')
+        for j in range(0, len(self.v)):
+            print(self.v)
+            pesos.append([self.v[j][0], self.v[j][1]])
 
     def escreve_incidente(self):
 
