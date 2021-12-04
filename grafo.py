@@ -47,7 +47,6 @@ class Grafo:
         self.escreve_adjacente()
         self.escreve_incidente()
         self.desenhaGrafo()
-        self.tabela_pesos()
 
     def remove_aresta(self,vertices):
         i = auxiliar.procura_aresta(self.entradas,vertices[0],vertices[1])
@@ -64,7 +63,6 @@ class Grafo:
         self.escreve_adjacente()
         self.escreve_incidente()
         self.desenhaGrafo()
-        self.tabela_pesos()
 
     def remove_no(self,no):
         aresta = auxiliar.procura_todas_arestas(self.entradas,no)
@@ -79,7 +77,6 @@ class Grafo:
         self.escreve_incidente()
         self.escreve_adjacente()
         self.desenhaGrafo()
-        self.tabela_pesos()
 
     def printa_matriz(self):
         print('Matriz adjacente :\n')
@@ -97,7 +94,6 @@ class Grafo:
         self.escreve_incidente()
         self.escreve_adjacente()
         self.desenhaGrafo()
-        self.tabela_pesos()
 
     def modifica_pesos (self, vert1, peso):
         aux = auxiliar.procura_todas_arestas(self.entradas,vert1)
@@ -110,9 +106,30 @@ class Grafo:
             print(self.e)
 
 
+    def desenha_matriz_adjacente (self):
+        fig, ax = plt.subplots(1, 1)
+        column_labels = []
 
+        for j in range (0,(auxiliar.atualiza_maior(self.entradas,-1))):
+            column_labels.append(j+1)
+        ax.axis('tight')
+        ax.axis('off')
+        ax.table(cellText=self.matriz_adjacente, colLabels=column_labels, loc="center", rowLabels=column_labels)
+        plt.savefig('Matriz adjacente.png')
 
+    def desenha_matriz_incidente(self):
+        fig, ax = plt.subplots(1, 1)
+        colunas = []
+        linha = []
+        for j in range(0, (auxiliar.atualiza_maior(self.entradas, -1))):
+            colunas.append(j + 1)
+        for i in range (0, len(self.entradas )):
+            linha.append(chr(i+65))
 
+        ax.axis('tight')
+        ax.axis('off')
+        ax.table(cellText=self.matriz_incidente, colLabels=linha ,loc="center", rowLabels=colunas)
+        plt.savefig('Matriz incidente.png')
 
     def desenhaGrafo(self):
 
@@ -128,7 +145,6 @@ class Grafo:
         edge_weight = nx.get_edge_attributes(G,"weight")
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
         plt.savefig('graph.png')
-
 
 
     def tabela_pesos(self):
@@ -159,17 +175,6 @@ class Grafo:
         ax.axis('off')
         ax.table(cellText=pesos, colLabels=column_labels, loc="center")
         plt.savefig('peso.png')
-
-
-
-
-
-
-
-
-
-
-
 
     def escreve_incidente(self):
 
@@ -248,8 +253,10 @@ class Grafo:
 #
 #
 #
-# objeto = Grafo()
-# objeto.pega_vertices()
+objeto = Grafo()
+objeto.pega_vertices()
+objeto.desenha_matriz_adjacente()
+objeto.desenha_matriz_incidente()
 # #objeto.pega_vertices_com_pesos()
 # objeto.tabela_pesos()
 #
