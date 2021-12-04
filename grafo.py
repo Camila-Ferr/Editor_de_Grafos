@@ -9,6 +9,7 @@ class Grafo:
     def __init__(self):
         self.entradas = []
         self.e =[]
+        self.v = []
         self.maior_vertice = 0
         self.contador = 0
         self.colunas = len(self.entradas)
@@ -51,6 +52,12 @@ class Grafo:
         i = auxiliar.procura_aresta(self.entradas,vertices[0],vertices[1])
         del self.entradas[i]
         del self.e[i]
+
+        if(auxiliar.atualiza_no(self.entradas,vertices[0])):
+            self.v.append(vertices[0])
+        if (auxiliar.atualiza_no(self.entradas,vertices[1])):
+            self.v.append(vertices[1])
+
         self.escreve_adjacente()
         self.escreve_incidente()
         self.desenhaGrafo()
@@ -59,6 +66,11 @@ class Grafo:
         aresta = auxiliar.procura_todas_arestas(self.entradas,no)
         for i in range (0,len(aresta)):
             self.remove_aresta(aresta[i])
+
+        for i in range (0,len(self.v)):
+            if (self.v[i] == no):
+                del self.v[i]
+                break
 
         self.escreve_incidente()
         self.escreve_adjacente()
@@ -89,18 +101,21 @@ class Grafo:
                 self.e[indice][3] = peso
             else:
                 self.e[indice][4] = peso
+            print(self.e)
 
 
 
 
 
 
-    def desenhaGrafo(self, num):
+    def desenhaGrafo(self):
 
         G = nx.Graph()
         plt.cla()
         plt.clf()
         E = self.entradas
+        for i in range(0,len(self.v)):
+            G.add_node(self.v[i])
         G.add_weighted_edges_from(E)
         pos = nx.spring_layout(G)
         nx.draw(G, pos, with_labels=True, font_weight="bold")
@@ -187,16 +202,17 @@ class Grafo:
 #
 #
 #
-# objeto = Grafo()
-#
-# #objeto.pega_vertices_com_pesos()
-# objeto.menu()
-# print("                         ")
-#
-#
-#
-#
-#
+objeto = Grafo()
+objeto.pega_vertices()
+#objeto.pega_vertices_com_pesos()
+objeto.remove_aresta([1,2])
+objeto.desenhaGrafo()
+print("                         ")
+
+
+
+
+
 
 
 

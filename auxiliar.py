@@ -35,3 +35,10 @@ def verifica_repeticao (entradas, v1,v2):
             continua = False
 
     return continua
+
+def atualiza_no(entradas, v1):
+    for i in range (0,len(entradas)):
+        if (entradas[i][0] == v1 or entradas[i][1] == v1) :
+            return False
+
+    return True
