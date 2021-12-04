@@ -86,14 +86,16 @@ class Grafo:
             print(self.matriz_incidente[i])
 
     def modifica_aresta (self, entrada):
-        i = auxiliar.procura_aresta(self.entradas,entrada[0],entrada[1])
-        self.entradas[i][2] = entrada[2]
-        self.e[i][2]= entrada[2]
-        self.escreve_incidente()
-        self.escreve_adjacente()
-        self.desenhaGrafo()
+
+        i = auxiliar.procura_aresta(self.e, entrada[0], entrada[1])
+        peso1 = self.e[i][3]
+        peso2 = self.e[i][4]
+        del (self.entradas[i])
+        del (self.e[i])
+        self.adiciona_aresta((entrada[0], entrada[1], entrada[2], peso1, peso2))
 
     def modifica_pesos (self, vert1, peso):
+
         aux = auxiliar.procura_todas_arestas(self.entradas,vert1)
         for i in range (0, len(aux)):
             indice = auxiliar.procura_aresta(self.e,aux[i][0],aux[i][1])
@@ -205,7 +207,7 @@ class Grafo:
 objeto = Grafo()
 objeto.pega_vertices()
 #objeto.pega_vertices_com_pesos()
-objeto.remove_aresta([1,2])
+objeto.modifica_aresta(1,2,3)
 objeto.desenhaGrafo()
 print("                         ")
 
