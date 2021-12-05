@@ -193,6 +193,15 @@ class Grafo:
             print(self.v)
             pesos.append([self.v[j][0], self.v[j][1]])
 
+        fig, ax = plt.subplots(1, 1)
+        column_labels = ["Vértice", "Peso"]
+        ax.axis('tight')
+        ax.axis('off')
+        ax.table(cellText=pesos, colLabels=column_labels, loc="center")
+        ax.set_facecolor('Blue')
+
+        plt.show()
+
     def escreve_incidente(self):
 
         self.colunas = len(self.entradas)
@@ -270,25 +279,13 @@ class Grafo:
 #
 #
 #
-objeto = Grafo()
-objeto.pega_vertices()
-objeto.desenha_matriz_adjacente()
-objeto.desenha_matriz_incidente()
+# objeto = Grafo()
+# objeto.pega_vertices()
+# objeto.desenha_matriz_adjacente()
+# objeto.desenha_matriz_incidente()
 # #objeto.pega_vertices_com_pesos()
 # objeto.tabela_pesos()
 #
 #
 # print("                         ")
 #
-
-
-
-
-
-
-
-
-
-
-
-

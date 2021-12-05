@@ -1,28 +1,70 @@
-import pandas as pd
-import seaborn as sns
+import numpy as np
+import PySimpleGUI as sg
 import matplotlib.pyplot as plt
-
-employees_df = pd.DataFrame({
-    '1': [20, 22, 29, 20, 20, 21],
-    '2': [65, 75, 80, 60, 63, 70],
-    '3': [1.6, 1.7, 1.85, 1.69, 1.8, 1.75],
-    '4': [3200, 3500, 4000, 2090, 2500, 3600],
-    '5': [3200, 3500, 4000, 2090, 2500, 3600],
-    '6': [3200, 3500, 4000, 2090, 2500, 3600],
-    '7': [3200, 3500, 4000, 2090, 2500, 3600],
-    '8': [3200, 3500, 4000, 2090, 2500, 3600],
-    '9': [3200, 3500, 4000, 2090, 2500, 3600],
-    '10': [3200, 3500, 4000, 2090, 2500, 3600]
-
-})
-
-correlacao = employees_df.corr(method='pearson')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
-plt.figure(figsize=(8, 6))
-sns.heatmap(correlacao, annot=True)
+# Functions to prevent GUI blurring
+def make_dpi_aware():
+    import ctypes
+    import platform
+    if int(platform.release()) >= 8:
+        ctypes.windll.shcore.SetProcessDpiAwareness(True)
 
 
-plt.savefig("teste")
+make_dpi_aware()
 
-print(correlacao)
+
+# Function for drawing
+def draw_figure(canvas, figure):
+    figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
+    figure_canvas_agg.draw()
+    figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
+    return figure_canvas_agg
+
+
+# Layout creation
+layout = [[sg.Text('Embed Matplotlib Plot')],
+          [sg.Canvas(key='-CANVAS-')],
+          [sg.Button("Add"), sg.Button("Clear")]]
+
+# Create a window. finalize=Must be True.
+window = sg.Window('Demo Application - Embedding Matplotlib In PySimpleGUI', layout, finalize=True,
+                   element_justification='center', font='Monospace 18')
+
+# Create a fig for embedding.
+fig = plt.figure(figsize=(5, 4))
+ax = fig.add_subplot(111)
+ax.set_ylim(-10, 10)
+
+# Associate fig with Canvas.
+fig_agg = draw_figure(window['-CANVAS-'].TKCanvas, fig)
+
+# Event loop
+while True:
+    event, values = window.read()
+    print(event, values)
+    # sg.Print(event, values)
+
+    if event in (None, "Cancel"):
+        break
+
+    elif event == "Add":
+        # Creating appropriate plot data
+        t = np.linspace(0, 7, 100)
+        afreq = np.random.randint(1, 10)
+        amp = np.random.randint(1, 10)
+        y = amp * np.sin(afreq * t)
+
+        # plot
+        ax.plot(t, y, alpha=0.4)
+
+        # After making changes, fig_agg.draw()Reflect the change with.
+        fig_agg.draw()
+
+    elif event == "Clear":
+        ax.cla()
+        fig_agg.draw()
+
+# close the window.
+window.close()
