@@ -6,6 +6,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from PIL import Image
 import io
 from grafo import Grafo
+from SegundaInterface import start
 
 GRAFO = Grafo()
 
@@ -120,7 +121,7 @@ while True:
                 entrada[1] = int(values['v2_mod_aresta'])
                 entrada[2] = int(values['novo_comprimento'])
                 entrada[3] = ''
-                print('entrei')
+
                 GRAFO.modifica_aresta(entrada)
                 atualiza_frame("graph.png")
 
@@ -189,7 +190,5 @@ while True:
         GRAFO.desenha3D()
 
     elif (event == 'op_cor'):
-        print()
-
-
+        start()
 

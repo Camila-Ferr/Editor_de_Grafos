@@ -86,7 +86,7 @@ class Grafo:
         self.adiciona_aresta((entrada[0], entrada[1], comprimento, peso1, peso2))
 
 
-        if(entrada[3] != ['']):
+        if(entrada[3] != ''):
             self.cores[len(self.cores)-1] = entrada[3]
 
 
@@ -102,6 +102,7 @@ class Grafo:
                 self.e[indice][3] = peso
             else:
                 self.e[indice][4] = peso
+
 
 
 
@@ -191,7 +192,7 @@ class Grafo:
     def desenhaGrafo(self):
         G,color_map = self.montaGrafo()
         pos = nx.spring_layout(G)
-        nx.draw(G, pos, with_labels=True, font_weight="bold",node_color = color_map)
+        nx.draw(G, pos, with_labels=True, font_weight="bold", node_color = color_map)
         edge_weight = nx.get_edge_attributes(G, "weight")
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
         plt.savefig('graph.png')
@@ -318,13 +319,12 @@ class Grafo:
         # Mostra a figura criada
         fig.show()
 
-        def limpa_grafo(self):
-            self.entradas = []
-            self.e = []
-            self.v = []
-            self.maior_vertice = 0
-            self.contador = 0
-            self.colunas = len(self.entradas)
-            self.desenhaGrafo()
-
-
+    def limpa_grafo(self):
+        self.entradas = []
+        self.e = []
+        self.v = []
+        self.maior_vertice = 0
+        self.contador = 0
+        self.colunas = len(self.entradas)
+        self.cores = []
+        self.desenhaGrafo()
