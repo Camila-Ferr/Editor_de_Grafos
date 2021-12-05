@@ -148,7 +148,7 @@ while True:
         entrada[0] = int(values['modifica_v1'])
         entrada[1] = int(values['novo_peso'])
         GRAFO.modifica_pesos(entrada[0], entrada[1])
-        atualiza_frame()
+        atualiza_frame("graph.png")
 
 
 
@@ -171,8 +171,13 @@ while True:
 
 
 
+    elif (event == 'visu_inci'):
+        GRAFO.desenha_matriz_incidente()
 
 
+
+    elif (event == 'visu_ad'):
+        GRAFO.desenha_matriz_adjacente()
 
 
 
