@@ -14,31 +14,7 @@ class Grafo:
         self.contador = 0
         self.colunas = len(self.entradas)
 
-    def pega_vertices(self):
-        vertices = [0, 0, 0]
-        print("Digite os vertices: ")
-        vertice_c_peso = list(map(int, input().split()))
-        while (len(vertice_c_peso) != 0):
-            if (auxiliar.verifica_repeticao(self.entradas,vertice_c_peso[0],vertice_c_peso[1])):
-                self.e.append(vertice_c_peso)
-                vertices = vertice_c_peso[0], vertice_c_peso[1], vertice_c_peso[2]
-                self.entradas.append(vertices)
-            print("Digite os vertices: ")
-            vertice_c_peso = list(map(int, input().split()))
-
-        print(self.entradas)
-        print(self.e)
-
-        for i in range(len(self.entradas)):
-            for j in range(0, 2):
-                if(self.entradas[i][j] > self.maior_vertice):
-                    self.maior_vertice = self.entradas[i][j]
-
-        self.escreve_adjacente()
-        self.escreve_incidente()
-
     def adiciona_aresta(self,vertices_c_peso):
-        vertices = [0,0,0]
         vertices= vertices_c_peso[0],vertices_c_peso[1],vertices_c_peso[2]
         if (auxiliar.verifica_repeticao(self.entradas,vertices_c_peso[0],vertices_c_peso[1])):
             self.entradas.append(vertices)
@@ -50,14 +26,14 @@ class Grafo:
 
     def remove_aresta(self,vertices):
         i = auxiliar.procura_aresta(self.entradas,vertices[0],vertices[1])
+
         peso1 = self.e[i][3]
         peso2 = self.e[i][4]
         del self.entradas[i]
         del self.e[i]
-
         if(auxiliar.atualiza_no(self.entradas,vertices[0])):
             self.v.append([vertices[0],peso1])
-        if (auxiliar.atualiza_no(self.entradas,vertices[1])):
+        if (auxiliar.atualiza_no(self.entradas,vertices[1]) and auxiliar.verifica_repeticao(self.v,vertices[0],vertices[1])):
             self.v.append([vertices[1],peso2])
 
         self.escreve_adjacente()
@@ -66,9 +42,10 @@ class Grafo:
 
     def remove_no(self,no):
         aresta = auxiliar.procura_todas_arestas(self.entradas,no)
+
         for i in range (0,len(aresta)):
             self.remove_aresta(aresta[i])
-        print("Aqui" ,self.v)
+
         for i in range (0,len(self.v)):
             if (self.v[i][0] == no):
                 del self.v[i]
@@ -78,23 +55,13 @@ class Grafo:
         self.escreve_adjacente()
         self.desenhaGrafo()
 
-    def printa_matriz(self):
-        print('Matriz adjacente :\n')
-        for i in range (0,len(self.matriz_adjacente)):
-            print(self.matriz_adjacente[i])
-
-        print('Matriz incidênte :\n')
-        for i in range(0, len(self.matriz_incidente)):
-            print(self.matriz_incidente[i])
-
     def modifica_aresta (self, entrada):
-        i = auxiliar.procura_aresta(self.e, entrada[0], entrada[1])
-        peso1 = self.e[i][3]
-        peso2 = self.e[i][4]
-        del (self.entradas[i])
-        del (self.e[i])
-        self.adiciona_aresta((entrada[0], entrada[1], entrada[2], peso1, peso2))
-
+        i = auxiliar.procura_aresta(self.entradas,entrada[0],entrada[1])
+        self.entradas[i][2] = entrada[2]
+        self.e[i][2] = entrada[2]
+        self.escreve_incidente()
+        self.escreve_adjacente()
+        self.desenhaGrafo()
 
     def modifica_pesos (self, vert1, peso):
         aux = auxiliar.procura_todas_arestas(self.entradas,vert1)
@@ -104,7 +71,6 @@ class Grafo:
                 self.e[indice][3] = peso
             else:
                 self.e[indice][4] = peso
-            print(self.e)
 
 
     def desenha_matriz_adjacente (self):
@@ -116,7 +82,7 @@ class Grafo:
         ax.axis('tight')
         ax.axis('off')
         ax.table(cellText=self.matriz_adjacente, colLabels=column_labels, loc="center", rowLabels=column_labels)
-        plt.show()
+        plt.savefig('Matriz adjacente.png')
 
     def desenha_matriz_incidente(self):
         fig, ax = plt.subplots(1, 1)
@@ -130,7 +96,7 @@ class Grafo:
         ax.axis('tight')
         ax.axis('off')
         ax.table(cellText=self.matriz_incidente, colLabels=linha ,loc="center", rowLabels=colunas)
-        plt.show()
+        plt.savefig('Matriz incidente.png')
 
     def limpa_grafo(self):
         self.entradas = []
@@ -191,7 +157,6 @@ class Grafo:
                 vertices.append(vertice2)
 
         for j in range(0, len(self.v)):
-            print(self.v)
             pesos.append([self.v[j][0], self.v[j][1]])
 
         fig, ax = plt.subplots(1, 1)
@@ -233,60 +198,3 @@ class Grafo:
         for i in range(len(self.entradas)):
             self.matriz_adjacente[self.entradas[i][0] - 1][self.entradas[i][1] - 1] = self.entradas[i][2]
             self.matriz_adjacente[self.entradas[i][1] - 1][self.entradas[i][0] - 1] = self.entradas[i][2]
-
-#
-#     def menu(self):
-#
-#         self.pega_vertices()
-#         self.desenhaGrafo()
-#         self.printa_matriz()
-#         n=1
-#
-#         while (n!=0):
-#             print('\n')
-#             print('Digite 1 para adicionar uma aresta :')
-#             print('Digite 2 para remover uma aresta :')
-#             print('Digite 3 para remover um nó :')
-#             print('Digite 4 para modificar o comprimento de uma aresta :')
-#             print('Digite 5 para modificar o peso de um vértice :\n')
-#             n = int(input())
-#
-#             if (n == 1):
-#                 print("Digite o vertice para adicionar: ")
-#                 vertices_c_peso = list(map(int, input().split()))
-#                 self.adiciona_aresta(vertices_c_peso)
-#                 self.printa_matriz()
-#             elif (n == 2):
-#                 print('Digite a aresta que deseja remover:')
-#                 aresta = list(map(int,input().split()))
-#                 self.remove_aresta(aresta)
-#                 self.printa_matriz()
-#             elif (n == 3):
-#                 print("Digite o nó para remover: ")
-#                 no = int(input())
-#                 self.remove_no(no)
-#                 self.printa_matriz()
-#             elif(n==4):
-#                 print("Digite a aresta para modificar: ")
-#                 aresta = list(map(int, input().split()))
-#                 self.modifica_aresta(aresta[0],aresta[1],aresta[2])
-#                 self.printa_matriz()
-#             elif(n==5):
-#                 print('Digite o vértice e seu novo peso :\n')
-#                 v = list(map(int, input().split()))
-#                 self.modifica_pesos(v[0],v[1])
-#
-#
-#
-#
-#
-# objeto = Grafo()
-# objeto.pega_vertices()
-# objeto.desenha_matriz_adjacente()
-# objeto.desenha_matriz_incidente()
-# #objeto.pega_vertices_com_pesos()
-# objeto.tabela_pesos()
-#
-#
-# print("                         ")
-#
