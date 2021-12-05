@@ -105,51 +105,60 @@ while True:
         break
 
     elif (event == 'adicionar'):
-
-        entrada = [0]*5
-        entrada[0] = int(values['vertice1'])
-        entrada[1] = int(values['vertice2'])
-        entrada[2] = int(values['comprimento'])
-        entrada[3] = int(values['peso1'])
-        entrada[4] = int(values['peso2'])
-        GRAFO.adiciona_aresta(entrada)
-        atualiza_frame("graph.png")
-
+        try:
+            entrada = [0]*5
+            entrada[0] = int(values['vertice1'])
+            entrada[1] = int(values['vertice2'])
+            entrada[2] = int(values['comprimento'])
+            entrada[3] = int(values['peso1'])
+            entrada[4] = int(values['peso2'])
+            GRAFO.adiciona_aresta(entrada)
+            atualiza_frame("graph.png")
+        except:
+            continue
 
     elif (event == 'remove_aresta'):
-
-        entrada = [0] * 2
-        entrada[0] = int(values['v1_remove_aresta'])
-        entrada[1] = int(values['v2_remove_aresta'])
-        GRAFO.remove_aresta(entrada)
-        atualiza_frame("graph.png")
+        try:
+            entrada = [0] * 2
+            entrada[0] = int(values['v1_remove_aresta'])
+            entrada[1] = int(values['v2_remove_aresta'])
+            GRAFO.remove_aresta(entrada)
+            atualiza_frame("graph.png")
+        except:
+            continue
 
     elif (event == 'modifica_aresta'):
+        try:
+            entrada = [0] * 3
+            entrada[0] = int(values['v1_mod_aresta'])
+            entrada[1] = int(values['v2_mod_aresta'])
+            entrada[2] = int(values['novo_comprimento'])
 
-        entrada = [0] * 3
-        entrada[0] = int(values['v1_mod_aresta'])
-        entrada[1] = int(values['v2_mod_aresta'])
-        entrada[2] = int(values['novo_comprimento'])
-
-        GRAFO.modifica_aresta(entrada)
-        atualiza_frame("graph.png")
-
+            GRAFO.modifica_aresta(entrada)
+            atualiza_frame("graph.png")
+        except:
+            continue
 
     elif (event == 'remove_vertice'):
-        entrada = [0]
-        entrada[0] = int(values['remove_v1'])
-        GRAFO.remove_no(entrada[0])
-        atualiza_frame("graph.png")
 
+        try:
+            entrada = [0]
+            entrada[0] = int(values['remove_v1'])
+            GRAFO.remove_no(entrada[0])
+            atualiza_frame("graph.png")
+        except:
+            continue
 
 
     elif (event == 'modifica_vertice'):
-        entrada = [0]*2
-        entrada[0] = int(values['modifica_v1'])
-        entrada[1] = int(values['novo_peso'])
-        GRAFO.modifica_pesos(entrada[0], entrada[1])
-        atualiza_frame("graph.png")
-
+        try:
+            entrada = [0]*2
+            entrada[0] = int(values['modifica_v1'])
+            entrada[1] = int(values['novo_peso'])
+            GRAFO.modifica_pesos(entrada[0], entrada[1])
+            atualiza_frame("graph.png")
+        except:
+            continue
 
 
 
@@ -161,7 +170,7 @@ while True:
 
     elif (event == 'limpar_grafo'):
         GRAFO.limpa_grafo()
-        atualiza_frame("graph.png")
+        atualiza_frame("tela_preta.png")
 
 
 
