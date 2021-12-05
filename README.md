@@ -71,4 +71,4 @@ incidência e matriz de adjacência.</i>
 <li> io </li> 
 <li> PIL </li>
 
-<img src = "Print do Projeto(1).png"> 
+<img src = "Projeto.png"> 
