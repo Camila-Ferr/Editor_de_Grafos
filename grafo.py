@@ -88,12 +88,13 @@ class Grafo:
             print(self.matriz_incidente[i])
 
     def modifica_aresta (self, entrada):
-        i = auxiliar.procura_aresta(self.entradas,entrada[0],entrada[1])
-        self.entradas[i][2] = entrada[2]
-        self.e[i][2] = entrada[2]
-        self.escreve_incidente()
-        self.escreve_adjacente()
-        self.desenhaGrafo()
+        i = auxiliar.procura_aresta(self.e, entrada[0], entrada[1])
+        peso1 = self.e[i][3]
+        peso2 = self.e[i][4]
+        del (self.entradas[i])
+        del (self.e[i])
+        self.adiciona_aresta((entrada[0], entrada[1], entrada[2], peso1, peso2))
+
 
     def modifica_pesos (self, vert1, peso):
         aux = auxiliar.procura_todas_arestas(self.entradas,vert1)
@@ -115,7 +116,7 @@ class Grafo:
         ax.axis('tight')
         ax.axis('off')
         ax.table(cellText=self.matriz_adjacente, colLabels=column_labels, loc="center", rowLabels=column_labels)
-        plt.savefig('Matriz adjacente.png')
+        plt.show()
 
     def desenha_matriz_incidente(self):
         fig, ax = plt.subplots(1, 1)
@@ -129,7 +130,7 @@ class Grafo:
         ax.axis('tight')
         ax.axis('off')
         ax.table(cellText=self.matriz_incidente, colLabels=linha ,loc="center", rowLabels=colunas)
-        plt.savefig('Matriz incidente.png')
+        plt.show()
 
     def limpa_grafo(self):
         self.entradas = []
