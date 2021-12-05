@@ -69,13 +69,20 @@ class Grafo:
         self.desenhaGrafo()
 
     def modifica_aresta (self, entrada):
+        tentativa = -1
         i = auxiliar.procura_aresta(self.e, entrada[0], entrada[1])
+        try:
+            tentativa = int(entrada[2])
+            comprimento = entrada[2]
+        except:
+            comprimento = self.e[i][2]
+
         peso1 = self.e[i][3]
         peso2 = self.e[i][4]
         del (self.entradas[i])
         del (self.e[i])
         del (self.cores[i])
-        self.adiciona_aresta((entrada[0], entrada[1], entrada[2], peso1, peso2))
+        self.adiciona_aresta((entrada[0], entrada[1], comprimento, peso1, peso2))
 
         try:
             self.cores[len(self.cores)-1] = entrada[3]
@@ -324,7 +331,7 @@ class Grafo:
 # objeto.adiciona_aresta([1,2,3,4,5])
 # objeto.adiciona_aresta([1,6,3,4,5])
 # objeto.adiciona_aresta([1,7,3,4,5])
-# objeto.modifica_aresta([1,7,5])
+# objeto.modifica_aresta([1,7,6])
 # objeto.desenhaGrafo()
-# objeto.modifica_aresta([1,2,6,'red'])
+# objeto.modifica_aresta([1,2,"",'red'])
 # objeto.desenhaGrafo()
