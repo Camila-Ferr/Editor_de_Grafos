@@ -70,3 +70,5 @@ incidência e matriz de adjacência.</i>
 <li> plotly</li>
 <li> io </li> 
 <li> PIL </li>
+
+<img src = "Print do Projeto(1).png"> 
