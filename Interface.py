@@ -17,36 +17,36 @@ sg.theme_background_color(color = 'Cyan')
 #Layout
 layout = [
     [sg.Text('Adicionar:', size=(15,0), background_color='Black', justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text('Vértice 1:', size=(10, 0), background_color='Cyan', justification='left'), sg.Input('vertice1', size=(10, 1), key='vertice1'),
-     sg.Text('Peso do Vértice 1:', size=(10, 0), background_color='Cyan', justification='left'), sg.Input('peso1', size=(10, 1), key='peso1'),
-     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('vertice2', size=(10,1), key='vertice2'),
-     sg.Text('Peso do Vértice 2:',size=(10,0), background_color='Cyan', justification='left'), sg.Input('peso2',size=(10,1), key='peso2'),
-     sg.Text('Comprimento da Aresta:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('comprimento', size=(10,1), key='comprimento')
+     sg.Text('Vértice 1:', size=(10, 0), background_color='Cyan', justification='left'), sg.Input(size=(10, 1), key='vertice1'),
+     sg.Text('Peso do Vértice 1:', size=(10, 0), background_color='Cyan', justification='left'), sg.Input(size=(10, 1), key='peso1'),
+     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='vertice2'),
+     sg.Text('Peso do Vértice 2:',size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='peso2'),
+     sg.Text('Comprimento da Aresta:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='comprimento')
      ],
 
     [sg.Text('Remover Aresta:', size=(15,0), background_color='Black', justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text('Vértice 1:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('v1_remove_aresta',size=(10,1), key='v1_remove_aresta'),
-     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('v2_remove_aresta', size=(10,1), key='v2_remove_aresta')],
+     sg.Text('Vértice 1:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='v1_remove_aresta'),
+     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='v2_remove_aresta')],
 
 
 
     [sg.Text('Modificar Aresta:', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text('Vértice 1:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('v1_mod_aresta',size=(10,1), key='v1_mod_aresta'),
-     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('v2_mod_aresta', size=(10,1), key='v2_mod_aresta'),
-     sg.Text('Novo \nComprimento:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('novo_comprimento', size=(10,1), key='novo_comprimento')],
+     sg.Text('Vértice 1:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='v1_mod_aresta'),
+     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='v2_mod_aresta'),
+     sg.Text('Novo \nComprimento:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='novo_comprimento')],
 
 
 
 
 
     [sg.Text('Remover Vértice', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text('Vértice \npara remoção:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('remove_v1', size=(10,1), key='remove_v1')],
+     sg.Text('Vértice \npara remoção:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='remove_v1')],
 
 
 
     [sg.Text('Modificar Vértice', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text('Vértice \npara modificação:', size=(12,0), background_color='Cyan', justification='left'), sg.Input('modifica_v1', size=(10,1), key='modifica_v1'),
-     sg.Text('Novo Peso:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('novo_peso', size=(10,1), key='novo_peso')],
+     sg.Text('Vértice \npara modificação:', size=(12,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='modifica_v1'),
+     sg.Text('Novo Peso:', size=(10,0), background_color='Cyan', justification='left'), sg.Input(size=(10,1), key='novo_peso')],
 
     [sg.Text('_' * 208, background_color='Cyan', justification='left')],
 
