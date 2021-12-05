@@ -64,14 +64,14 @@ layout = [
 
 
     [sg.Button('Visualizar Matriz de Adjacência', key='visu_ad', size=(25,0)),
-     sg.Text(' '*10, background_color='Cyan'), sg.Button('Visualizar Matriz de Incidência', key='visu_inci',size=(25,0)),
-     sg.Text(' '*10, background_color='Cyan'), sg.Button("Visualizar Pesos", key='visu_pesos',size=(25,0)),
-     sg.Text(' '*10, background_color='Cyan'), sg.Button("Visualizar Grafo", key='visualisar_grafo',size=(25,0)),
-     sg.Text(' '*10, background_color='Cyan'), sg.Button("Limpar Grafo", key='limpar_grafo',size=(25,0))
+     sg.Text(' '*2, background_color='Cyan'), sg.Button('Visualizar Matriz de Incidência', key='visu_inci',size=(25,0)),
+     sg.Text(' '*2, background_color='Cyan'), sg.Button("Visualizar Pesos", key='visu_pesos',size=(25,0)),
+     sg.Text(' '*2, background_color='Cyan'), sg.Button("Visualizar Grafo", key='visualisar_grafo',size=(25,0)),
+     sg.Text(' '*2, background_color='Cyan'), sg.Button("Visualizar Grafo 3D", key='visualizar_3D', size=(25,0)),
+     sg.Text(' '*2, background_color='Cyan'), sg.Button("Limpar Grafo", key='limpar_grafo',size=(25,0))
      ],
 
     [sg.Text(' ', size=(50,30), background_color='Cyan'), sg.Image(key='-IMAGEM_GRAFO-'), sg.Image(key='-IMAGEM_PESO-')]
-
 
 ]
 
@@ -86,11 +86,6 @@ def atualiza_frame(arquivo):
     image.save(bio, format="PNG")
     window["-IMAGEM_GRAFO-"].update(data=bio.getvalue())
 
-    # tabela_pesos = Image.open("peso.png")
-    # tabela_pesos.thumbnail((1000, 1000))
-    # bio = io.BytesIO()
-    # tabela_pesos.save(bio, format="PNG")
-    # window["-IMAGEM_PESO-"].update(data=bio.getvalue())
 
 
 atualiza_frame("tela_preta.png")
@@ -190,5 +185,6 @@ while True:
 
 
 
-
+    elif (event == 'visualizar_3D'):
+        GRAFO.desenha3D()
 
