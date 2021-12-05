@@ -1,5 +1,4 @@
 def procura_todas_arestas(entradas,verti1):
-
     arestas =[]
 
     for i in range (0,len(entradas)):

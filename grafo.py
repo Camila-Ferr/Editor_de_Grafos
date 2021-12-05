@@ -11,11 +11,10 @@ class Grafo:
     def __init__(self):
         self.entradas = []
         self.e =[]
+        self.cores = []
         self.v = []
         self.maior_vertice = 0
-        self.contador = 0
         self.colunas = len(self.entradas)
-        self.cores = []
 
     # Método para pega a entrada do usuario e colocalas nas listas self.entradas e self.e
     def adiciona_aresta(self,vertices_c_peso):
@@ -40,30 +39,33 @@ class Grafo:
         # Segura os pedos no iondice correspondente na lista self.e
         peso1 = self.e[i][3]
         peso2 = self.e[i][4]
-        # Deleta a aresta  das listas self.entradas e self.e
+        # Deleta a aresta  das entradas
         del self.entradas[i]
         del self.e[i]
         del self.cores[i]
+        #verifica se o no ta sozinho
         if(auxiliar.atualiza_no(self.entradas,vertices[0])):
             self.v.append([vertices[0],peso1])
+        #verifica se ta sozinho e se já entrou na lista. Ex: caso o nó se ligue com ele mesmo
         if (auxiliar.atualiza_no(self.entradas,vertices[1]) and auxiliar.verifica_repeticao(self.v,vertices[0],vertices[1])):
             self.v.append([vertices[1],peso2])
-
+        #reescreve as matrizes, atualiza o grafo
         self.escreve_adjacente()
         self.escreve_incidente()
         self.desenhaGrafo()
 
     def remove_no(self,no):
+        #Procura todas as arestas
         aresta = auxiliar.procura_todas_arestas(self.entradas,no)
-
+        #remove uma por uma
         for i in range (0,len(aresta)):
             self.remove_aresta(aresta[i])
-
+        #Nó vai entrar na lista de vértices sozinhos, procura o vertice e exclui.
         for i in range (0,len(self.v)):
             if (self.v[i][0] == no):
                 del self.v[i]
                 break
-
+        #Reescreve as matrizes e atualiza o Grafo
         self.escreve_incidente()
         self.escreve_adjacente()
         self.desenhaGrafo()
@@ -71,37 +73,48 @@ class Grafo:
     def modifica_aresta (self, entrada):
 
         tentativa = -1
+        #procura a aresta pra remover
         i = auxiliar.procura_aresta(self.e, entrada[0], entrada[1])
+        #verifica se o comprimmento foi mudado, caso contrário, mantém
         try:
             tentativa = int(entrada[2])
             comprimento = entrada[2]
         except:
             comprimento = self.e[i][2]
-
+        #Mantém os pesos
         peso1 = self.e[i][3]
         peso2 = self.e[i][4]
+        #deleta as arestas
         del (self.entradas[i])
         del (self.e[i])
         del (self.cores[i])
+        #adiciona uma nova aresta
         self.adiciona_aresta((entrada[0], entrada[1], comprimento, peso1, peso2))
 
-
+        #atualiza a cor se essa for a escolha do usuário
         if(entrada[3] != ''):
             self.cores[len(self.cores)-1] = entrada[3]
 
-
+        #Reescreve matrizes e atualiza Grafo
         self.escreve_incidente()
         self.escreve_adjacente()
         self.desenhaGrafo()
 
     def modifica_pesos (self, vert1, peso):
+        #Procura todas as arestas
         aux = auxiliar.procura_todas_arestas(self.entradas,vert1)
+        #Modifica o peso de uma por uma
         for i in range (0, len(aux)):
             indice = auxiliar.procura_aresta(self.e,aux[i][0],aux[i][1])
             if (self.e[indice][0] == vert1):
                 self.e[indice][3] = peso
             else:
                 self.e[indice][4] = peso
+        # Se a lista retornar vazia, procura nos vértices sozinhos
+        if (len(aux) == 0):
+            for i in range (0,len(self.v)):
+                if self.v[i][0] == vert1:
+                    self.v[i][1] = peso
 
 
 
@@ -118,7 +131,7 @@ class Grafo:
         for i in range (0, self.maior_vertice):
             linha = [0]*self.colunas
             matriz.append(linha)
-
+        #Marca as arestas e vertices que se ligam como 1
         for lin in range (0, len(self.entradas)):
             for col in range (0,2):
                 indice = self.entradas[lin][col]
@@ -131,10 +144,11 @@ class Grafo:
         self.maior_vertice = auxiliar.atualiza_maior(self.entradas, -1)
         self.colunas = len(self.entradas)
         self.matriz_adjacente = []
+        #Cria a matriz zerada
         for i in range(self.maior_vertice):
             lista = [0] * self.maior_vertice
             self.matriz_adjacente.append(lista)
-
+        #Adiciona o comprimento dos vertíces quando eles se ligam
         for i in range(len(self.entradas)):
             self.matriz_adjacente[self.entradas[i][0] - 1][self.entradas[i][1] - 1] = self.entradas[i][2]
             self.matriz_adjacente[self.entradas[i][1] - 1][self.entradas[i][0] - 1] = self.entradas[i][2]
@@ -324,7 +338,6 @@ class Grafo:
         self.e = []
         self.v = []
         self.maior_vertice = 0
-        self.contador = 0
         self.colunas = len(self.entradas)
         self.cores = []
         self.desenhaGrafo()
