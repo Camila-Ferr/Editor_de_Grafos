@@ -3,6 +3,8 @@ import matplotlib
 import networkx as nx
 import matplotlib.pyplot as plt
 import os
+import plotly.graph_objects as go
+import networkx as nx
 
 class Grafo:
 
@@ -198,3 +200,85 @@ class Grafo:
         for i in range(len(self.entradas)):
             self.matriz_adjacente[self.entradas[i][0] - 1][self.entradas[i][1] - 1] = self.entradas[i][2]
             self.matriz_adjacente[self.entradas[i][1] - 1][self.entradas[i][0] - 1] = self.entradas[i][2]
+
+
+
+
+
+    def desenha3D(self):
+
+        ######## Criando grafo em 2D #############
+
+        #Cria figura graph
+        G = nx.Graph()
+        #Lista para o comprimento das arestas
+        aresta_comprimento = []
+
+        for i in range(0, len(self.entradas)):
+            G.add_edge(self.entradas[i][0], self.entradas[i][1], weight = self.entradas[i][2])
+            comprimento = self.entradas[i][2]
+            aresta_comprimento.append(comprimento)
+
+        Num_nodes = len(G.nodes)
+
+
+        arestas = G.edges()
+
+        # Plotando o grafo 2D em 3D
+        dicionario_3D = nx.spring_layout(G, dim = 3, k = 0.5)
+
+
+        # Separando as coordenadas X, Y, Z para Plotar
+        # dicionario_3D é um dicionário onde as chaves são de 1 a 6
+        x_no= [dicionario_3D[key][0] for key in dicionario_3D.keys()] # x-coordenadas do nó
+        y_no = [dicionario_3D[key][1] for key in dicionario_3D.keys()] # y-coordenadas do nó
+        z_no = [dicionario_3D[key][2] for key in dicionario_3D.keys()] # z-coordenadas do nó
+
+        # Criando uma listas que contem as coordenadas inicial e final de cada aresta.
+        x_arestas=[]
+        y_arestas=[]
+        z_arestas=[]
+
+        # Criando uma listas contendo pontos médios que serão usados para ancorar o texto
+        x_tx = []
+        y_tx = []
+        z_tx = []
+
+        # Preenchendo as coordenadas
+
+        for edge in arestas:
+            #format: [beginning,ending,None]
+            x_coords = [dicionario_3D[edge[0]][0],dicionario_3D[edge[1]][0],None]
+            x_arestas += x_coords
+            x_tx.append(0.5*(dicionario_3D[edge[0]][0]+ dicionario_3D[edge[1]][0]))
+
+            y_coords = [dicionario_3D[edge[0]][1],dicionario_3D[edge[1]][1],None]
+            y_arestas += y_coords
+            y_tx.append(0.5*(dicionario_3D[edge[0]][1]+ dicionario_3D[edge[1]][1]))
+
+            z_coords = [dicionario_3D[edge[0]][2],dicionario_3D[edge[1]][2],None]
+            z_arestas += z_coords
+            z_tx.append(0.5*(dicionario_3D[edge[0]][2]+ dicionario_3D[edge[1]][2]))
+
+        ############# Style das arestas #########
+        etext = [f'weight={w}' for w in aresta_comprimento]
+
+        trace_weights = go.Scatter3d(x=x_tx, y=y_tx, z=z_tx,
+            mode='markers',
+            marker =dict(color='rgb(125,125,125)', size=1), #definindo a mesma cor das linhas e das borda
+
+            text = etext, hoverinfo='text')
+        ###########################################################################################
+
+        # Criando as arestas
+        trace_edges = go.Scatter3d(x=x_arestas, y=y_arestas, z=z_arestas, mode='lines', line=dict(color='black', width=2), hoverinfo='none')
+
+        # Criando os nós
+        trace_nodes = go.Scatter3d(x=x_no, y=y_no, z=z_no, mode='markers', marker=dict(symbol='circle', size=10, color='skyblue'))
+
+        # Inclui traça as arestas e os nós e criar uma figura com os nós e arestas
+        data = [trace_edges, trace_nodes, trace_weights]
+        fig = go.Figure(data=data)
+
+        # Mostra a figura criada
+        fig.show()
