@@ -82,7 +82,7 @@ class Grafo:
         ax.axis('tight')
         ax.axis('off')
         ax.table(cellText=self.matriz_adjacente, colLabels=column_labels, loc="center", rowLabels=column_labels)
-        plt.savefig('Matriz adjacente.png')
+        plt.show()
 
     def desenha_matriz_incidente(self):
         fig, ax = plt.subplots(1, 1)
@@ -96,7 +96,7 @@ class Grafo:
         ax.axis('tight')
         ax.axis('off')
         ax.table(cellText=self.matriz_incidente, colLabels=linha ,loc="center", rowLabels=colunas)
-        plt.savefig('Matriz incidente.png')
+        plt.show()
 
     def limpa_grafo(self):
         self.entradas = []
