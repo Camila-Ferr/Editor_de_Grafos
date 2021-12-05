@@ -5,7 +5,7 @@ def procura_todas_arestas(entradas,verti1):
     for i in range (0,len(entradas)):
         for j in range (0,2):
 
-            if entradas[i][j] == verti1:
+            if (entradas[i][j] == verti1) and (entradas[i] not in arestas) :
                 arestas.append(entradas[i])
 
     return arestas
