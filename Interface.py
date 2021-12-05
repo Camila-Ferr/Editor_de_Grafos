@@ -1,8 +1,4 @@
-import networkx as nx
-import numpy as np
 import PySimpleGUI as sg
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from PIL import Image
 import io
 from grafo import Grafo
