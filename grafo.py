@@ -15,6 +15,7 @@ class Grafo:
         self.maior_vertice = 0
         self.contador = 0
         self.colunas = len(self.entradas)
+        self.cores = []
 
     # Método para pega a entrada do usuario e colocalas nas listas self.entradas e self.e
     def adiciona_aresta(self,vertices_c_peso):
@@ -23,6 +24,7 @@ class Grafo:
         if (auxiliar.verifica_repeticao(self.entradas,vertices_c_peso[0],vertices_c_peso[1])):
             self.entradas.append(vertices)
             self.e.append(vertices_c_peso)
+            self.cores.append('skyblue')
 
         # Escreve a entrada recebida na matriz de adjacência
         self.escreve_adjacente()
@@ -41,6 +43,7 @@ class Grafo:
         # Deleta a aresta  das listas self.entradas e self.e
         del self.entradas[i]
         del self.e[i]
+        del self.cores[i]
         if(auxiliar.atualiza_no(self.entradas,vertices[0])):
             self.v.append([vertices[0],peso1])
         if (auxiliar.atualiza_no(self.entradas,vertices[1]) and auxiliar.verifica_repeticao(self.v,vertices[0],vertices[1])):
@@ -71,7 +74,13 @@ class Grafo:
         peso2 = self.e[i][4]
         del (self.entradas[i])
         del (self.e[i])
+        del (self.cores[i])
         self.adiciona_aresta((entrada[0], entrada[1], entrada[2], peso1, peso2))
+
+        try:
+            self.cores[len(self.cores)-1] = entrada[3]
+        except:
+            pass
 
         self.escreve_incidente()
         self.escreve_adjacente()
@@ -154,17 +163,27 @@ class Grafo:
 
 
 
-    def desenhaGrafo(self):
-
+    def montaGrafo(self):
         G = nx.Graph()
         plt.cla()
         plt.clf()
+        color_map = []
+        cor = 'green'
         E = self.entradas
         for i in range(0, len(self.v)):
             G.add_node(self.v[i][0])
         G.add_weighted_edges_from(E)
+        for node in G:
+            for i in range (0,len(self.entradas)):
+                if (self.entradas[i][0] == node) or (self.entradas[i][1] == node):
+                    cor = self.cores[i]
+            color_map.append(cor)
+        return G,color_map
+
+    def desenhaGrafo(self):
+        G,color_map = self.montaGrafo()
         pos = nx.spring_layout(G)
-        nx.draw(G, pos, with_labels=True, font_weight="bold")
+        nx.draw(G, pos, with_labels=True, font_weight="bold",node_color = color_map)
         edge_weight = nx.get_edge_attributes(G, "weight")
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
         plt.savefig('graph.png')
@@ -173,16 +192,9 @@ class Grafo:
 
 
     def desenhaGrafoSeparado(self):
-
-        G = nx.Graph()
-        plt.cla()
-        plt.clf()
-        E = self.entradas
-        for i in range(0, len(self.v)):
-            G.add_node(self.v[i][0])
-        G.add_weighted_edges_from(E)
+        G, color_map = self.montaGrafo()
         pos = nx.spring_layout(G)
-        nx.draw(G, pos, with_labels=True, font_weight="bold")
+        nx.draw(G, pos, with_labels=True, font_weight="bold", node_color = color_map)
         edge_weight = nx.get_edge_attributes(G, "weight")
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weight)
         plt.show()
@@ -306,3 +318,13 @@ class Grafo:
             self.contador = 0
             self.colunas = len(self.entradas)
             self.desenhaGrafo()
+
+
+# objeto = Grafo()
+# objeto.adiciona_aresta([1,2,3,4,5])
+# objeto.adiciona_aresta([1,6,3,4,5])
+# objeto.adiciona_aresta([1,7,3,4,5])
+# objeto.modifica_aresta([1,7,5])
+# objeto.desenhaGrafo()
+# objeto.modifica_aresta([1,2,6,'red'])
+# objeto.desenhaGrafo()
