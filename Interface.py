@@ -12,65 +12,88 @@ GRAFO = Grafo()
 sg.theme(new_theme='Reddit')
 sg.theme_border_width(border_width = 5)
 
-sg.theme_background_color(color = 'Pink')
+sg.theme_background_color(color = 'Cyan')
 
 #Layout
 layout = [
-    [sg.Text(' '*33, background_color='Pink'), sg.Text('Adicionar', size=(15,0), background_color='Black', justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text(" "*30, background_color='Pink'), sg.Text('Remover Aresta', size=(15,0), background_color='Black', justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text(' '*20, background_color='Pink'), sg.Text('Modificar Aresta', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text(' '*20, background_color='Pink'), sg.Text('Remover Vértice', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White'),
-     sg.Text(' '*23, background_color='Pink'), sg.Text('Modificar Vértice', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White')],
+    [sg.Text('Adicionar:', size=(15,0), background_color='Black', justification='center', font=('Arial, 11'), text_color='White'),
+     sg.Text('Vértice 1:', size=(10, 0), background_color='Cyan', justification='left'), sg.Input('vertice1', size=(10, 1), key='vertice1'),
+     sg.Text('Peso do Vértice 1:', size=(10, 0), background_color='Cyan', justification='left'), sg.Input('peso1', size=(10, 1), key='peso1'),
+     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('vertice2', size=(10,1), key='vertice2'),
+     sg.Text('Peso do Vértice 2:',size=(10,0), background_color='Cyan', justification='left'), sg.Input('peso2',size=(10,1), key='peso2'),
+     sg.Text('Comprimento da Aresta:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('comprimento', size=(10,1), key='comprimento')
+     ],
 
-    [sg.Text('Vértice 1:', size=(10,0), background_color='Pink', justification='left'), sg.Input('vertice1', size=(10,1), key='vertice1'),
-     sg.Text('Peso do Vértice 1:', size=(10,0), background_color='Pink', justification='left'), sg.Input('peso1', size=(10,1), key='peso1'),
-     sg.Text(" "*5, background_color='Pink'), sg.Text('Vértice 1:', size=(10,0), background_color='Pink', justification='left'), sg.Input('v1_remove_aresta',size=(10,1), key='v1_remove_aresta'),
-     sg.Text(" "*10, background_color='Pink'), sg.Text('Vértice 1:', size=(10,0), background_color='Pink', justification='left'), sg.Input('v1_mod_aresta',size=(10,1), key='v1_mod_aresta'),
-     sg.Text(' '*10, background_color='Pink'), sg.Text('Vértice \npara remoção:', size=(10,0), background_color='Pink', justification='left'), sg.Input('remove_v1', size=(10,1), key='remove_v1'),
-     sg.Text(' '*10, background_color='Pink'), sg.Text('Vértice \npara modificação:', size=(12,0), background_color='Pink', justification='left'), sg.Input('modifica_v1', size=(10,1), key='modifica_v1')],
-
-
-    [sg.Text('Vértice 2:', size=(10,0), background_color='Pink', justification='left'), sg.Input('vertice2', size=(10,1), key='vertice2'),
-     sg.Text('Peso do Vértice 2:',size=(10,0), background_color='Pink', justification='left'), sg.Input('peso2',size=(10,1), key='peso2'),
-     sg.Text(" "*5, background_color='Pink'), sg.Text('Vértice 2:', size=(10,0), background_color='Pink', justification='left'), sg.Input('v2_remove_aresta', size=(10,1), key='v2_remove_aresta'),
-     sg.Text(' '*10, background_color='Pink'), sg.Text('Vértice 2:', size=(10,0), background_color='Pink', justification='left'), sg.Input('v2_mod_aresta', size=(10,1), key='v2_mod_aresta'),
-     sg.Text(' '*78, background_color='Pink'), sg.Text('Novo Peso:', size=(10,0), background_color='Pink', justification='left'), sg.Input('novo_peso', size=(10,1), key='novo_peso')],
-
-
-    [sg.Text('Comprimento da Aresta:', size=(10,0), background_color='Pink', justification='left'), sg.Input('comprimento', size=(10,1), key='comprimento'),
-     sg.Text(' '*118, background_color='Pink'), sg.Text('Novo \nComprimento:', size=(10,0), background_color='Pink', justification='left'), sg.Input('novo_comprimento', size=(10,1), key='novo_comprimento')],
-
-    [sg.Text(' '*30, background_color='Pink'), sg.Button('Adicionar', key='adicionar'), sg.Text(" "*55, background_color='Pink'),
-     sg.Button('Remover Aresta',  key='remove_aresta'),
-     sg.Text(' '*35, background_color='Pink'), sg.Button('Modificar Aresta', key='modifica_aresta'),
-     sg.Text(' '*30, background_color='Pink'), sg.Button('Remove Vértice', key='remove_vertice'),
-     sg.Text(' '*30, background_color='Pink'), sg.Button('Modificar Vértice', key='modifica_vertice')],
-
-    [sg.Text('_'*208, background_color='Pink', justification='left')],
-
-    [sg.Text(' '*330, background_color='Pink'), sg.Button("Visualizar Graph", key='visualisar_grafo')],
-
-    [sg.Image(key='-IMAGEM-')],
+    [sg.Text('Remover Aresta:', size=(15,0), background_color='Black', justification='center', font=('Arial, 11'), text_color='White'),
+     sg.Text('Vértice 1:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('v1_remove_aresta',size=(10,1), key='v1_remove_aresta'),
+     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('v2_remove_aresta', size=(10,1), key='v2_remove_aresta')],
 
 
 
+    [sg.Text('Modificar Aresta:', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White'),
+     sg.Text('Vértice 1:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('v1_mod_aresta',size=(10,1), key='v1_mod_aresta'),
+     sg.Text('Vértice 2:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('v2_mod_aresta', size=(10,1), key='v2_mod_aresta'),
+     sg.Text('Novo \nComprimento:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('novo_comprimento', size=(10,1), key='novo_comprimento')],
+
+
+
+
+
+    [sg.Text('Remover Vértice', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White'),
+     sg.Text('Vértice \npara remoção:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('remove_v1', size=(10,1), key='remove_v1')],
+
+
+
+    [sg.Text('Modificar Vértice', background_color='Black', size=(15,0), justification='center', font=('Arial, 11'), text_color='White'),
+     sg.Text('Vértice \npara modificação:', size=(12,0), background_color='Cyan', justification='left'), sg.Input('modifica_v1', size=(10,1), key='modifica_v1'),
+     sg.Text('Novo Peso:', size=(10,0), background_color='Cyan', justification='left'), sg.Input('novo_peso', size=(10,1), key='novo_peso')],
+
+    [sg.Text('_' * 208, background_color='Cyan', justification='left')],
+
+    [sg.Button('Adicionar', key='adicionar', size=(20,0)),
+     sg.Text(' '*10, background_color='Cyan'), sg.Button('Remover Aresta',  key='remove_aresta', size=(20,0)),
+     sg.Text(' '*10, background_color='Cyan'), sg.Button('Modificar Aresta', key='modifica_aresta', size=(20,0)),
+     sg.Text(' '*10, background_color='Cyan'), sg.Button('Remove Vértice', key='remove_vertice', size=(20,0)),
+     sg.Text(' '*10, background_color='Cyan'), sg.Button('Modificar Vértice', key='modifica_vertice', size=(20,0))],
+
+    [sg.Text('_' * 208, background_color='Cyan', justification='left')],
+
+    [sg.Text('GRAFO', background_color='Cyan', justification='Left', font=('Arial', 14))],
+
+
+
+
+    [sg.Button('Visualizar Matriz de Adjacência', key='visu_ad', size=(25,0)),
+     sg.Text(' '*10, background_color='Cyan'), sg.Button('Visualizar Matriz de Incidência', key='visu_inci',size=(25,0)),
+     sg.Text(' '*10, background_color='Cyan'), sg.Button("Visualizar Pesos", key='visu_pesos',size=(25,0)),
+     sg.Text(' '*10, background_color='Cyan'), sg.Button("Visualizar Grafo", key='visualisar_grafo',size=(25,0)),
+     sg.Text(' '*10, background_color='Cyan'), sg.Button("Limpar Grafo", key='limpar_grafo',size=(25,0))
+     ],
+
+    [sg.Text(' ', size=(50,30), background_color='Cyan'), sg.Image(key='-IMAGEM_GRAFO-'), sg.Image(key='-IMAGEM_PESO-')]
 
 
 ]
 
-    #janela
 
+    #janela
 window = sg.Window("Editor de Grafos",layout, finalize=True, size=(1500, 950))
 
-def atualiza_frame():
-    image = Image.open("graph.png")
-    image.thumbnail((900, 900))
+def atualiza_frame(arquivo):
+    image = Image.open(arquivo)
+    image.thumbnail((1000, 1000))
     bio = io.BytesIO()
     image.save(bio, format="PNG")
-    window["-IMAGEM-"].update(data=bio.getvalue())
+    window["-IMAGEM_GRAFO-"].update(data=bio.getvalue())
+
+    # tabela_pesos = Image.open("peso.png")
+    # tabela_pesos.thumbnail((1000, 1000))
+    # bio = io.BytesIO()
+    # tabela_pesos.save(bio, format="PNG")
+    # window["-IMAGEM_PESO-"].update(data=bio.getvalue())
 
 
-
+atualiza_frame("tela_preta.png")
 
 
 while True:
@@ -90,7 +113,8 @@ while True:
         entrada[3] = int(values['peso1'])
         entrada[4] = int(values['peso2'])
         GRAFO.adiciona_aresta(entrada)
-        atualiza_frame()
+        atualiza_frame("graph.png")
+
 
     elif (event == 'remove_aresta'):
 
@@ -98,7 +122,7 @@ while True:
         entrada[0] = int(values['v1_remove_aresta'])
         entrada[1] = int(values['v2_remove_aresta'])
         GRAFO.remove_aresta(entrada)
-        atualiza_frame()
+        atualiza_frame("graph.png")
 
     elif (event == 'modifica_aresta'):
 
@@ -106,26 +130,46 @@ while True:
         entrada[0] = int(values['v1_mod_aresta'])
         entrada[1] = int(values['v2_mod_aresta'])
         entrada[2] = int(values['novo_comprimento'])
+
         GRAFO.modifica_aresta(entrada)
-        atualiza_frame()
+        atualiza_frame("graph.png")
+
 
     elif (event == 'remove_vertice'):
         entrada = [0]
-        entrada[0] = values['remove_v1']
+        entrada[0] = int(values['remove_v1'])
         GRAFO.remove_no(entrada[0])
-        atualiza_frame()
+        atualiza_frame("graph.png")
+
+
 
     elif (event == 'modifica_vertice'):
         entrada = [0]*2
-        entrada[0] = values['modifica_v1']
-        entrada[1] = values['novo_peso']
+        entrada[0] = int(values['modifica_v1'])
+        entrada[1] = int(values['novo_peso'])
         GRAFO.modifica_pesos(entrada[0], entrada[1])
         atualiza_frame()
-        print(GRAFO.entradas[0][2])
+
+
+
 
     elif (event == 'visualisar_grafo'):
 
-        GRAFO.desenhaGrafo(1)
+        GRAFO.desenhaGrafoSeparado()
+
+
+
+    elif (event == 'limpar_grafo'):
+        GRAFO.limpa_grafo()
+        atualiza_frame("graph.png")
+
+
+
+
+    elif (event == 'visu_pesos'):
+        GRAFO.tabela_pesos()
+
+
 
 
 
